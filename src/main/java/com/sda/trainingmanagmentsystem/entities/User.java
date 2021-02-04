@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -31,7 +31,7 @@ public class User {
     private Classes classes;
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
-    private List<Notification> notifications;
+    private Set<Notification> notifications;
 
 
 }

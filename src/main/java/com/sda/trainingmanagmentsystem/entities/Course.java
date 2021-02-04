@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,8 +23,8 @@ public class Course {
     private ApplicationForm applicationForm;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private List<Classes> classes;
+    private Set<Classes> classes;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private List<Activities> activities;
+    private Set<Activities> activities;
 }

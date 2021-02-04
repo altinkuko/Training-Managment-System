@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,6 +19,6 @@ public class Notification {
     @ManyToMany
     @JoinTable(name = "user_notification", joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "notifocationId"))
-    private List<User> users;
+    private Set<User> users;
 
 }
