@@ -14,10 +14,10 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long roleId;
     private String role;
-    @OneToOne(mappedBy = "role", fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "userId")
     @JsonIgnore
     private User user;
-
 }

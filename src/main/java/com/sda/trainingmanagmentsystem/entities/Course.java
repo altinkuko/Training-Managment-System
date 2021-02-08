@@ -16,14 +16,14 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long courseId;
     private String courseName;
-    @OneToOne(mappedBy = "course")
-    @JsonIgnore
-    private ApplicationForm applicationForm;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private Set<Classes> classes;
+    private Set<ParticipantApplication> participantApplication;
+    @OneToMany(mappedBy = "course")
+    @JsonIgnore
+    private Set<GroupClasses> groups;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
     private Set<Activities> activities;

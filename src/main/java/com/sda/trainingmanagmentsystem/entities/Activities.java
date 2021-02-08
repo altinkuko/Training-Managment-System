@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Activities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long activitiesId;
     private String subject;
     private LocalDate date;
     @ManyToOne

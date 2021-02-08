@@ -16,22 +16,21 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;
     private String username;
     private String password;
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "roleId")
-    private Role role;
-    @OneToOne(mappedBy = "user")
-    private ApplicationForm applicationForm;
-    @OneToOne(mappedBy = "user")
-    private Classes classes;
-    @ManyToMany(mappedBy = "users")
+    private Set<Role> role;
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
+    private Set<ParticipantApplication> participantApplication;
+    @OneToMany(mappedBy = "senderUser")
     private Set<Notification> notifications;
-
-
+    @ManyToOne
+    @JoinColumn(name = "notificationId")
+    private Notification receiverNotification;
 }

@@ -13,12 +13,10 @@ import javax.persistence.*;
 public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long classesId;
     private String className;
     @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
-    @OneToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "groupClassesId")
+    private GroupClasses group;
+
 }
