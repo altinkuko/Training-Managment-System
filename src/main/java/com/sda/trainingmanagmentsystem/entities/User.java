@@ -22,15 +22,17 @@ public class User {
     private String email;
     private String username;
     private String password;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "roleId")
-    private Set<Role> role;
+    private Role role;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<ParticipantApplication> participantApplication;
-    @OneToMany(mappedBy = "senderUser")
-    private Set<Notification> notifications;
+    @OneToMany(mappedBy = "instructor")
+    @JsonIgnore
+    private Set<Course> courses;
     @ManyToOne
-    @JoinColumn(name = "notificationId")
-    private Notification receiverNotification;
+    @JoinColumn(name = "classesId")
+    private Classes classes;
+
 }

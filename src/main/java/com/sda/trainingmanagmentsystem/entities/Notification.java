@@ -21,9 +21,6 @@ public class Notification {
     private String subject;
     private String content;
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User senderUser;
-    @OneToMany(mappedBy = "receiverNotification")
-    @JsonIgnore
-    private Set<User> receiverUsers;
+    @JoinColumn(name = "classesId")
+    private Classes classesNotification;
 }

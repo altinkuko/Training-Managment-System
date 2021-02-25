@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,8 +17,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
     private String role;
-    @ManyToOne
-    @JoinColumn(name = "userId")
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
-    private User user;
+    private Set<User> users;
 }

@@ -1,10 +1,12 @@
 package com.sda.trainingmanagmentsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,5 +20,10 @@ public class Classes {
     @ManyToOne
     @JoinColumn(name = "groupClassesId")
     private GroupClasses group;
-
+    @OneToMany(mappedBy = "classesNotification")
+    @JsonIgnore
+    private Set<Notification> notifications;
+    @OneToMany(mappedBy = "classes")
+    @JsonIgnore
+    private Set<User> users;
 }
