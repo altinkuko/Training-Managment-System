@@ -18,6 +18,6 @@ public class Activities {
     private String subject;
     private LocalDate date;
     @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
+    @JoinColumn(name = "classId")
+    private Classes classes;
 }

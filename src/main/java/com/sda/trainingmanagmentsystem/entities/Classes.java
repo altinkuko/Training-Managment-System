@@ -23,7 +23,10 @@ public class Classes {
     @OneToMany(mappedBy = "classesNotification")
     @JsonIgnore
     private Set<Notification> notifications;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User instructor;
     @OneToMany(mappedBy = "classes")
     @JsonIgnore
-    private Set<User> users;
+    private Set<Activities> activities;
 }

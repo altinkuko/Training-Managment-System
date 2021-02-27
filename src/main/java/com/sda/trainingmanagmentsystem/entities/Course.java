@@ -24,10 +24,4 @@ public class Course {
     @OneToMany(mappedBy = "course")
     @JsonIgnore
     private Set<GroupClasses> groups;
-    @OneToMany(mappedBy = "course")
-    @JsonIgnore
-    private Set<Activities> activities;
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User instructor;
 }

@@ -23,4 +23,7 @@ public class GroupClasses {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
+    @OneToMany(mappedBy = "classes")
+    @JsonIgnore
+    private Set<User> students;
 }

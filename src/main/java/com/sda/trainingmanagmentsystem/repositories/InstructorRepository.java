@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface InstructorRepository extends JpaRepository<User, Long> {
-@Query(value = "select c from Course c inner join c.instructor i where i.userId = :userId")
+@Query(value = "select c from Course c join c.groups g join g.classes cl join cl.instructor i where i.userId = :userId")
     List<Course> findInstructorCourses(@Param("userId")final Long userId);
 
 }

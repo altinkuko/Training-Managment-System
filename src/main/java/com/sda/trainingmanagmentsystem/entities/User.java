@@ -30,9 +30,9 @@ public class User {
     private Set<ParticipantApplication> participantApplication;
     @OneToMany(mappedBy = "instructor")
     @JsonIgnore
-    private Set<Course> courses;
+    private Set<Classes> modules;
     @ManyToOne
     @JoinColumn(name = "classesId")
-    private Classes classes;
+    private GroupClasses classes;
 
 }
