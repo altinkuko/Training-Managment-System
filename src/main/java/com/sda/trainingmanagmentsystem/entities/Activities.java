@@ -14,10 +14,10 @@ import java.time.LocalDate;
 public class Activities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long activitiesId;
     private String subject;
     private LocalDate date;
     @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
+    @JoinColumn(name = "classId")
+    private Classes classes;
 }

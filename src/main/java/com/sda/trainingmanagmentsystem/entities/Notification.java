@@ -1,10 +1,12 @@
 package com.sda.trainingmanagmentsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -14,11 +16,11 @@ import java.util.Set;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long notificationId;
+    private LocalDate date;
+    private String subject;
     private String content;
-    @ManyToMany
-    @JoinTable(name = "user_notification", joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "notifocationId"))
-    private Set<User> users;
-
+    @ManyToOne
+    @JoinColumn(name = "classesId")
+    private Classes classesNotification;
 }

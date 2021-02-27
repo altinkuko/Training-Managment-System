@@ -10,18 +10,20 @@ import java.util.Set;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Course {
-
+@AllArgsConstructor
+public class GroupClasses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
-    private String courseName;
-    @OneToMany(mappedBy = "course")
+    private Long groupClassesId;
+    private String groupName;
+    @OneToMany(mappedBy = "group")
     @JsonIgnore
-    private Set<ParticipantApplication> participantApplication;
-    @OneToMany(mappedBy = "course")
+    private Set<Classes> classes;
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
+    @OneToMany(mappedBy = "classes")
     @JsonIgnore
-    private Set<GroupClasses> groups;
+    private Set<User> students;
 }
