@@ -53,8 +53,10 @@ public class UserService {
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(userRequestParams.getPassword());
         user.setRole(role);
-        UserService.log.info("User saved successfully");
-        return this.userRepository.save(user);
+        if (isRegister(userRequestParams.getUsername()) == false) {
+            UserService.log.info("User saved successfully");
+            return this.userRepository.save(user);
+        } else return user;
     }
 
     public User registerAdministrator(final UserRequestParams userRequestParams) {
@@ -67,8 +69,10 @@ public class UserService {
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(userRequestParams.getPassword());
         user.setRole(role);
-        UserService.log.info("User saved successfully");
-        return this.userRepository.save(user);
+        if (isRegister(userRequestParams.getUsername()) == false) {
+            UserService.log.info("User saved successfully");
+            return this.userRepository.save(user);
+        } else return user;
     }
 
     public User updateUser(final UserRequestParams userRequestParams, final Long userId) {
