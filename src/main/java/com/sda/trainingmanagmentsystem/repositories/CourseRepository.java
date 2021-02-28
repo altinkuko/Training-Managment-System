@@ -21,4 +21,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query(value = "select a from Activities a join a.classes cl where cl.classesId = :classId")
     List<Activities> findActivitiesByClasses(@Param("classId") final Long classId);
+
 }
