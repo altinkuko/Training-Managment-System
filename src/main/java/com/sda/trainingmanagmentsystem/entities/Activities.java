@@ -1,5 +1,6 @@
 package com.sda.trainingmanagmentsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Activities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +21,6 @@ public class Activities {
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "classId")
+    @JsonIgnore
     private Classes classes;
 }

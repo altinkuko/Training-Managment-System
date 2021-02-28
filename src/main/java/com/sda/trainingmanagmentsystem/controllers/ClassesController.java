@@ -20,10 +20,6 @@ public class ClassesController {
     private ClassesService classesService;
     @Autowired
     private NotificationService notificationService;
-    @PostMapping("/notification/{classesId}")
-    public ResponseEntity<Notification> postClassesNotification(@RequestBody final NotificationRequestParams notification,@PathVariable("classesId") final Long classesId){
-        Notification classNotification = this.classesService.postClassNotification(notification,classesId);
-        return ResponseEntity.ok(classNotification);
-    }
+
 
 }

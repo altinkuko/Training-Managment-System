@@ -4,12 +4,16 @@ import com.sda.trainingmanagmentsystem.entities.Activities;
 import com.sda.trainingmanagmentsystem.entities.Classes;
 import com.sda.trainingmanagmentsystem.entities.GroupClasses;
 import com.sda.trainingmanagmentsystem.repositories.CourseRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
+@Slf4j
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;

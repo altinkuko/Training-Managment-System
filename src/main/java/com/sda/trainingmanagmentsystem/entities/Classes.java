@@ -20,9 +20,6 @@ public class Classes {
     @ManyToOne
     @JoinColumn(name = "groupClassesId")
     private GroupClasses group;
-    @OneToMany(mappedBy = "classesNotification")
-    @JsonIgnore
-    private Set<Notification> notifications;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User instructor;

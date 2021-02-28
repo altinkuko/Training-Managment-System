@@ -26,4 +26,7 @@ public class GroupClasses {
     @OneToMany(mappedBy = "classes")
     @JsonIgnore
     private Set<User> students;
+    @OneToMany(mappedBy = "classesNotification")
+    @JsonIgnore
+    private Set<Notification> notifications;
 }
