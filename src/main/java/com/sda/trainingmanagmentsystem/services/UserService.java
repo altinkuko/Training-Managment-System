@@ -35,8 +35,12 @@ public class UserService {
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(userRequestParams.getPassword());
         user.setRole(role);
-        UserService.log.info("User saved successfully");
-        return this.userRepository.save(user);
+        if (isRegister(userRequestParams.getUsername()) == false) {
+            UserService.log.info("User saved successfully");
+            return this.userRepository.save(user);
+        } else return user;
+
+
     }
 
     public User registerInstructor(final UserRequestParams userRequestParams) {
@@ -108,6 +112,15 @@ public class UserService {
     public void deleteUserById(final Long userId) {
         User user = this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
         this.userRepository.delete(user);
+    }
+
+    public boolean isRegister(final String username) {
+
+        for (User user : this.userRepository.findAll()
+        ) {
+            if (user.getUsername().equals(username)) return true;
+        }
+        return false;
     }
 
 }

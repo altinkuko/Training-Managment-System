@@ -5,6 +5,7 @@ import com.sda.trainingmanagmentsystem.services.ParticipantApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,5 +20,10 @@ public class ParticipantApplicationController {
        ParticipantApplication participantApplication= this.participantApplicationService.userApplication(userId,courseId);
   return ResponseEntity.ok(participantApplication);
     }
+@GetMapping("/application/{userId}")
+    public ResponseEntity<Boolean> isRegister(@PathVariable("userId") final Long userId, @RequestParam final Long courseId){
+        boolean isRegister = this.participantApplicationService.isRegister(userId,courseId);
+        return ResponseEntity.ok(isRegister);
+}
 
 }
