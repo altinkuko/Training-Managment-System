@@ -23,4 +23,7 @@ public class Activities {
     @JoinColumn(name = "classId")
     @JsonIgnore
     private Classes classes;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User instructor;
 }

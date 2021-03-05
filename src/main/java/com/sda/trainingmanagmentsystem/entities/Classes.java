@@ -17,13 +17,16 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long classesId;
     private String className;
-    @ManyToOne
-    @JoinColumn(name = "groupClassesId")
-    private GroupClasses group;
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User instructor;
     @OneToMany(mappedBy = "classes")
     @JsonIgnore
     private Set<Activities> activities;
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
+    @OneToMany(mappedBy = "classes")
+    @JsonIgnore
+    private Set<User> students;
+    @OneToMany(mappedBy = "classesNotification")
+    @JsonIgnore
+    private Set<Notification> notifications;
 }
