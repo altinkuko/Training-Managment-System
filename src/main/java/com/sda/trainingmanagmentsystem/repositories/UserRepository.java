@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT u from User u inner join u.role r where r.role = :role")
-    List<User> findStudents(@Param("role") final String role);
+    @Query(value = "SELECT u from User u inner join u.role r where r.roleId = :roleId")
+    List<User> findUsersByRole(@Param("roleId") final Long roleId);
+
+    User findByUsername(final String username);
 
 }

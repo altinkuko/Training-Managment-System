@@ -19,6 +19,9 @@ public class Notification {
     private String subject;
     private String content;
     @ManyToOne
-    @JoinColumn(name = "groupClassesId")
+    @JoinColumn(name = "classesId")
     private Classes classesNotification;
+    @ManyToOne
+    @JoinColumn(name = "notificationReadId")
+    private NotificationRead notificationRead;
 }

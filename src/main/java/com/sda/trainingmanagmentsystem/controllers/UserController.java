@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/user/")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -41,22 +42,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/update/instructor/{userId}")
-    public ResponseEntity<User> updateInstructor(@RequestBody @Valid final UserRequestParams userRequestParams, @PathVariable("userId") final Long userId) {
-        User instructor = this.userService.updateInstructor(userRequestParams, userId);
-        return ResponseEntity.ok(instructor);
-    }
-
-    @PostMapping("/update/admin/{userId}")
-    public ResponseEntity<User> updateAdmin(@RequestBody @Valid final UserRequestParams userRequestParams, @PathVariable("userId") final Long userId) {
-        User admin = this.userService.updateAdmin(userRequestParams, userId);
-        return ResponseEntity.ok(admin);
-    }
-
-    @GetMapping("/users/{role}")
-    public ResponseEntity<List<User>> getStudents(@PathVariable("role") final String role) {
-        List<User> students = this.userService.findStudents(role);
-        return ResponseEntity.ok(students);
+    @GetMapping("/users/{roleId}")
+    public ResponseEntity<List<User>> getStudents(@PathVariable("roleId") final Long roleId) {
+        List<User> users = this.userService.findUsersByRole(roleId);
+        return ResponseEntity.ok(users);
     }
 
     @DeleteMapping("/delete/user/{userId}")

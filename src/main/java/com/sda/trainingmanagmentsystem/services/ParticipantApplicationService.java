@@ -25,28 +25,44 @@ public class ParticipantApplicationService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Boolean isRegister(final Long userId, final Long courseId){
+    public Boolean isRegister(final Long userId, final Long courseId) {
         boolean isRegister = false;
         List<ParticipantApplication> participantApplications = this.participantApplicationRepository.
                 readUnacceptedParticipantApplication();
-        for (ParticipantApplication participantApplication: participantApplications
-        ) { if (participantApplication.getCourse()==this.courseRepository.findById(courseId).
-                orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION))
-        && participantApplication.getUser()==this.userRepository.findById(userId).
-                orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)))
-            return isRegister=true;
-                    }
+        for (ParticipantApplication participantApplication : participantApplications
+        ) {
+            if (participantApplication.getCourse() == this.courseRepository.findById(courseId).
+                    orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION))
+                    && participantApplication.getUser() == this.userRepository.findById(userId).
+                    orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)))
+                return isRegister = true;
+        }
         return isRegister;
     }
 
-    public ParticipantApplication userApplication(final Long userId, final Long courseId){
+    public ParticipantApplication userApplication(final Long userId, final Long courseId) {
         ParticipantApplication participantApplication = new ParticipantApplication();
         participantApplication.setAccepted(false);
         participantApplication.setDate(LocalDate.now());
-        participantApplication.setUser(this.userRepository.findById(userId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
-        participantApplication.setCourse(this.courseRepository.findById(courseId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
-        if (isRegister(userId,courseId) == false)
-        return participantApplicationRepository.save(participantApplication);
+        participantApplication.setUser(this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
+        participantApplication.setCourse(this.courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
+        if (isRegister(userId, courseId) == false)
+            return participantApplicationRepository.save(participantApplication);
         else return participantApplication;
+    }
+
+    public ParticipantApplication acceptApplication(final Long applicationId) {
+        ParticipantApplication participantApplication = this.participantApplicationRepository.findById(applicationId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        participantApplication.setAccepted(true);
+        return this.participantApplicationRepository.save(participantApplication);
+    }
+    public List<ParticipantApplication> listUnacceptedApplication(){
+        return this.participantApplicationRepository.readUnacceptedParticipantApplication();
+    }
+    public void deleteApplication(final Long applicationId){
+        ParticipantApplication participantApplication = this.participantApplicationRepository.findById(applicationId).orElseThrow(()->new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        participantApplication.setUser(null);
+        participantApplication.setCourse(null);
+        this.participantApplicationRepository.delete(participantApplication);
     }
 }
