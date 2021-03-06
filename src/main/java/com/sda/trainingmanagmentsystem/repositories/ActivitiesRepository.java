@@ -14,6 +14,6 @@ public interface ActivitiesRepository extends JpaRepository<Activities, Long> {
     @Query(value = "select a from Activities a where a.date = :dates")
     public List<Activities> findActivitiesByDate(@Param("dates") final LocalDate date);
 
-    @Query(value = "select a from Activities a join a.classes c join c.group g where g.groupClassesId = :groupClassesId")
-    public List<Activities> listActivitiesByGroupClasses(@Param("groupClassesId")final Long groupClassesId);
+    @Query(value = "select a from Activities a join a.classes c where c.classesId = :classesId")
+    public List<Activities> listActivitiesByClasses(@Param("classesId")final Long classesId);
 }

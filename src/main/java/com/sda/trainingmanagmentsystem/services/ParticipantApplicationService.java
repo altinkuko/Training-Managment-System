@@ -28,7 +28,7 @@ public class ParticipantApplicationService {
     public Boolean isRegister(final Long userId, final Long courseId){
         boolean isRegister = false;
         List<ParticipantApplication> participantApplications = this.participantApplicationRepository.
-                readParticipantApplication();
+                readUnacceptedParticipantApplication();
         for (ParticipantApplication participantApplication: participantApplications
         ) { if (participantApplication.getCourse()==this.courseRepository.findById(courseId).
                 orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION))

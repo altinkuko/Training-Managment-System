@@ -1,6 +1,9 @@
 package com.sda.trainingmanagmentsystem.services;
 
+import com.sda.trainingmanagmentsystem.constants.ErrorMessages;
 import com.sda.trainingmanagmentsystem.entities.Activities;
+import com.sda.trainingmanagmentsystem.models.errors.NotFoundException;
+import com.sda.trainingmanagmentsystem.models.pojo.ActivitiesRequestParams;
 import com.sda.trainingmanagmentsystem.repositories.ActivitiesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,29 @@ public class ActivitiesService {
     public List<Activities> findActivitiesByDate (LocalDate date){
         return this.activitiesRepository.findActivitiesByDate(date);
     }
-    public List<Activities> listActivitiesByGroupClasses(final Long groupClassesId){
-        return this.activitiesRepository.listActivitiesByGroupClasses(groupClassesId);
+    public List<Activities> listActivitiesByClasses(final Long classesId){
+        return this.activitiesRepository.listActivitiesByClasses(classesId);
     }
+
+    public Activities createActivities (final ActivitiesRequestParams activitiesRequestParams){
+        Activities activities = new Activities();
+        activities.setDate(activitiesRequestParams.getDate());
+        activities.setSubject(activitiesRequestParams.getSubject());
+        return this.activitiesRepository.save(activities);
+    }
+
+    public void deleteActivities(final Long activitiesId){
+        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        activities.setClasses(null);
+        activities.setInstructor(null);
+        this.activitiesRepository.delete(activities);
+    }
+
+    public Activities updateActivities (final ActivitiesRequestParams activitiesRequestParams, final Long activitiesId){
+        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        activities.setDate(activitiesRequestParams.getDate());
+        activities.setSubject(activitiesRequestParams.getSubject());
+        return this.activitiesRepository.save(activities);
+    }
+
 }

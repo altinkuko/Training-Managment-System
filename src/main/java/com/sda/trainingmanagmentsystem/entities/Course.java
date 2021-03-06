@@ -23,5 +23,5 @@ public class Course {
     private Set<ParticipantApplication> participantApplication;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private Set<GroupClasses> groups;
+    private Set<Classes> groups;
 }

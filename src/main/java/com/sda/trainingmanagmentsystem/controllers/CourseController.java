@@ -1,9 +1,7 @@
 package com.sda.trainingmanagmentsystem.controllers;
 
-import com.sda.trainingmanagmentsystem.entities.Activities;
-import com.sda.trainingmanagmentsystem.entities.Classes;
 import com.sda.trainingmanagmentsystem.entities.Course;
-import com.sda.trainingmanagmentsystem.entities.GroupClasses;
+import com.sda.trainingmanagmentsystem.models.errors.NotFoundException;
 import com.sda.trainingmanagmentsystem.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,24 +18,19 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/course/groupclasses/{userId}")
-public ResponseEntity<List<GroupClasses>> findGroupClassesByInstructor(@PathVariable("userId") final Long userId){
-        List<GroupClasses> groupClassesList = this.courseService.readGroupClassesByInstructor(userId);
-        return ResponseEntity.ok(groupClassesList);
-    }
-@GetMapping("/classes/{userId}")
-    public ResponseEntity<List<Classes>> findClassesByInstructor(@PathVariable("userId") final Long userId){
-        List<Classes> classes = this.courseService.readClassesByInstructor(userId);
-        return ResponseEntity.ok(classes);
-}
-@GetMapping("/activities/{classId}")
-    public ResponseEntity<List<Activities>> findActivitiesByClass (@PathVariable("classId") final Long classId){
-        List<Activities> activities = this.courseService.readActivitiesByClasses(classId);
-        return ResponseEntity.ok(activities);
-}
 @PostMapping("/create/course")
     public ResponseEntity<Course> createCourse(@RequestParam("courseName") final String courseName){
         Course course = this.courseService.createCourse(courseName);
         return ResponseEntity.ok(course);
 }
+@PostMapping("/update/{courseId}")
+    public ResponseEntity<Course> updateCourse (@PathVariable("courseId") final Long courseId, @RequestParam("courseName") final String courseName){
+        Course course = this.courseService.updateCourse(courseId, courseName);
+        return ResponseEntity.ok(course);
+}
+    @GetMapping("/courses/{userId}")
+    public ResponseEntity<List<Course>> getCourses(@PathVariable("userId") final Long userId) throws NotFoundException {
+        List<Course> courses = this.courseService.readCoursesByInstructor(userId);
+        return ResponseEntity.ok(courses);
+    }
 }
