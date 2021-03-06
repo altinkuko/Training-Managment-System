@@ -15,12 +15,13 @@ import javax.transaction.Transactional;
 public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
-public Notification saveNotification(final NotificationRequestParams notificationRequestParams){
-    Notification notification = new Notification();
-    notification.setDate(notificationRequestParams.getDate());
-    notification.setContent(notificationRequestParams.getContent());
-    notification.setSubject(notificationRequestParams.getSubject());
-    return this.notificationRepository.save(notification);
-}
+
+    public Notification saveNotification(final NotificationRequestParams notificationRequestParams) {
+        Notification notification = new Notification();
+        notification.setDate(notificationRequestParams.getDate());
+        notification.setContent(notificationRequestParams.getContent());
+        notification.setSubject(notificationRequestParams.getSubject());
+        return this.notificationRepository.save(notification);
+    }
 
 }

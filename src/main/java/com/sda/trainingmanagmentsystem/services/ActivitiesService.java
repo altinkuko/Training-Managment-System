@@ -35,7 +35,16 @@ public class ActivitiesService {
 
     public void deleteActivities(final Long activitiesId){
         Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        activities.setClasses(null);
+        activities.setInstructor(null);
         this.activitiesRepository.delete(activities);
+    }
+
+    public Activities updateActivities (final ActivitiesRequestParams activitiesRequestParams, final Long activitiesId){
+        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        activities.setDate(activitiesRequestParams.getDate());
+        activities.setSubject(activitiesRequestParams.getSubject());
+        return this.activitiesRepository.save(activities);
     }
 
 }
