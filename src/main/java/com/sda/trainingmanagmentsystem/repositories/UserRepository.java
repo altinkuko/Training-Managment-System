@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u from User u inner join u.role r where r.roleId = :roleId")
     List<User> findUsersByRole(@Param("roleId") final Long roleId);
+    @Query(value = "select u from User u inner join u.classes c where c.classesId = :classesId")
+    List<User> findUsersByClass(@Param(("classesId")) final Long classesId);
 
     User findByUsername(final String username);
 

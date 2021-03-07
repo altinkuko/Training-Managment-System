@@ -12,16 +12,18 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationRead {
+public class UserNotification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notificationReadId;
-    private Boolean notificationRead;
+    private Boolean isRead;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnore
     private User user;
-    @OneToMany(mappedBy = "notificationRead")
-    private Set<Notification> notifications;
+    @ManyToOne
+    @JoinColumn(name = "notificationId")
+    private Notification notification;
 
 }

@@ -2,6 +2,7 @@ package com.sda.trainingmanagmentsystem.controllers;
 
 import com.sda.trainingmanagmentsystem.entities.Classes;
 import com.sda.trainingmanagmentsystem.entities.Notification;
+import com.sda.trainingmanagmentsystem.entities.UserNotification;
 import com.sda.trainingmanagmentsystem.models.pojo.NotificationRequestParams;
 import com.sda.trainingmanagmentsystem.services.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class ClassesController {
     private ClassesService classesService;
 
     @PostMapping("/notification/{classId}")
-    public ResponseEntity<Notification> postClassesNotification(@RequestBody final NotificationRequestParams notification, @PathVariable("classId") final Long classId) {
-        Notification classNotification = this.classesService.postClassNotification(notification, classId);
-        return ResponseEntity.ok(classNotification);
+    public ResponseEntity<List<UserNotification>> postClassesNotification(@RequestBody final NotificationRequestParams notification, @PathVariable("classId") final Long classId) {
+        List<UserNotification> userNotifications = this.classesService.postClassNotification(notification, classId);
+        return ResponseEntity.ok(userNotifications);
     }
 
     @PostMapping("/create")
