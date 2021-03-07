@@ -5,6 +5,7 @@ import com.sda.trainingmanagmentsystem.entities.Role;
 import com.sda.trainingmanagmentsystem.entities.User;
 import com.sda.trainingmanagmentsystem.models.errors.NotFoundException;
 import com.sda.trainingmanagmentsystem.models.pojo.UserRequestParams;
+import com.sda.trainingmanagmentsystem.repositories.ClassesRepository;
 import com.sda.trainingmanagmentsystem.repositories.RoleRepository;
 import com.sda.trainingmanagmentsystem.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private ClassesRepository classesRepository;
 
     public User registerUser(final UserRequestParams userRequestParams) {
         userRequestParams.validPassword();
@@ -129,6 +133,11 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
+    public User assignUserToClass(final Long userId, final Long classId){
+        User user = this.userRepository.findById(userId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        user.setClasses(this.classesRepository.findById(classId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
+        return this.userRepository.save(user);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
