@@ -53,5 +53,10 @@ public class UserController {
         this.userService.deleteUserById(userId);
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/class/{userId}")
+    public ResponseEntity<User> assignUserToClass(@PathVariable("userId") final Long userId, @RequestParam("classId") final Long classId){
+        User user = this.userService.assignUserToClass(userId,classId);
+        return ResponseEntity.ok(user);
+    }
 
 }
