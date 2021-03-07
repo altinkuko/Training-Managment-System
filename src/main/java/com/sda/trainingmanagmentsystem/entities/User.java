@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,7 +39,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "classesId")
     private Classes classes;
     @OneToMany(mappedBy = "user")
-    private Set<NotificationRead> notificationReads;
+    private Set<UserNotification> userNotifications;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

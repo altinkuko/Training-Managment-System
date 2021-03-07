@@ -28,7 +28,4 @@ public class Classes {
     @OneToMany(mappedBy = "classes")
     @JsonIgnore
     private Set<User> students;
-    @OneToMany(mappedBy = "classesNotification")
-    @JsonIgnore
-    private Set<Notification> notifications;
 }

@@ -19,6 +19,7 @@ import java.io.IOException;
 @Transactional
 @Slf4j
 public class NotificationService {
+
     @Autowired
     private NotificationRepository notificationRepository;
 

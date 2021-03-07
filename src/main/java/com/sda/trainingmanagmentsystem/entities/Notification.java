@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,10 +19,6 @@ public class Notification {
     private LocalDate date;
     private String subject;
     private String content;
-    @ManyToOne
-    @JoinColumn(name = "classesId")
-    private Classes classesNotification;
-    @ManyToOne
-    @JoinColumn(name = "notificationReadId")
-    private NotificationRead notificationRead;
+    @OneToMany(mappedBy = "notification")
+    private Set<UserNotification> notifications;
 }
