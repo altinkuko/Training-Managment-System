@@ -18,4 +18,6 @@ public class ActivitiesRequestParams {
     @NotEmpty(message = "Required field")
     private String subject;
     private LocalDate date;
+    private Long userId;
+    private Long classId;
 }

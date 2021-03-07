@@ -17,6 +17,8 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long classesId;
     private String className;
+    private Boolean active;
+    private byte[] file;
     @OneToMany(mappedBy = "classes")
     @JsonIgnore
     private Set<Activities> activities;

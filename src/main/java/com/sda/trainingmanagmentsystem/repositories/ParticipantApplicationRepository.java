@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ParticipantApplicationRepository extends JpaRepository<ParticipantApplication,Long> {
-    @Query(value = "select p from ParticipantApplication p where p.accepted = :false")
+    @Query(value = "select p from ParticipantApplication p where p.accepted = false")
     List<ParticipantApplication> readUnacceptedParticipantApplication();
 
 }

@@ -9,16 +9,18 @@ import com.sda.trainingmanagmentsystem.repositories.RoleRepository;
 import com.sda.trainingmanagmentsystem.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 @Slf4j
-public class UserService {
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -108,9 +110,9 @@ public class UserService {
         return user;
     }
 
-    public List<User> findStudents(final String role) {
-        List<User> students = this.userRepository.findStudents(role);
-        return students;
+    public List<User> findUsersByRole(final Long roleId) {
+        List<User> usersByRole = this.userRepository.findUsersByRole(roleId);
+        return usersByRole;
     }
 
     public void deleteUserById(final Long userId) {
@@ -127,4 +129,13 @@ public class UserService {
         return false;
     }
 
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.findByUsername(username);
+        if (user == null)
+            throw new UsernameNotFoundException("user not found");
+        else
+        return user;
+    }
 }
