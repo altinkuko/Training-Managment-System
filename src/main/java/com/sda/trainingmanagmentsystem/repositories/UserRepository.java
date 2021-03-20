@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -17,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u from User u inner join u.classes c where c.classesId = :classesId")
     List<User> findUsersByClass(@Param(("classesId")) final Long classesId);
 
-    User findByUsername(final String username);
+    Optional<User> findByUsername(final String username);
 
 }

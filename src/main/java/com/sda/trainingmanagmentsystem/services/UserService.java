@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,6 +33,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private ClassesRepository classesRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public User registerUser(final UserRequestParams userRequestParams) {
         userRequestParams.validPassword();
         User user = new User();
@@ -41,12 +46,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(userRequestParams.getPassword());
         user.setRole(role);
-        if (isRegister(userRequestParams.getUsername()) == false) {
-            UserService.log.info("User saved successfully");
-            return this.userRepository.save(user);
-        } else return user;
-
-
+        return user;
     }
 
     public User registerInstructor(final UserRequestParams userRequestParams) {
@@ -88,7 +88,7 @@ public class UserService implements UserDetailsService {
         user.setLastName(userRequestParams.getLastName());
         user.setEmail(userRequestParams.getEmail());
         user.setUsername(userRequestParams.getUsername());
-        user.setPassword(userRequestParams.getPassword());
+        user.setPassword(this.passwordEncoder.encode(userRequestParams.getPassword()));
         return user;
     }
 
@@ -141,10 +141,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUsername(username);
+        Optional<User> user = this.userRepository.findByUsername(username);
         if (user == null)
             throw new UsernameNotFoundException("user not found");
         else
-        return user;
+        return user.get();
     }
 }
