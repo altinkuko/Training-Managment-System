@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(userRequestParams.getPassword());
         user.setRole(role);
-        return user;
+        return userRepository.save(user);
     }
 
     public User registerInstructor(final UserRequestParams userRequestParams) {
@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
         user.setEmail(userRequestParams.getEmail());
         user.setUsername(userRequestParams.getUsername());
         user.setPassword(this.passwordEncoder.encode(userRequestParams.getPassword()));
-        return user;
+        return userRepository.save(user);
     }
 
     public User updateInstructor(final UserRequestParams userRequestParams, final Long userId) {

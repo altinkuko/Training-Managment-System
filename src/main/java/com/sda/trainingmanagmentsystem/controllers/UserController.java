@@ -11,8 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,16 +33,16 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registerTheUser(@Valid @ModelAttribute("user") UserRequestParams user, BindingResult result, Model model) {
-        Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+    public String registerTheUser(@Valid @ModelAttribute("user") UserRequestParams userRequestParams, BindingResult result) {
+        Optional<User> optionalUser = userRepository.findByUsername(userRequestParams.getUsername());
         if (optionalUser.isPresent()) {
             result.rejectValue("username", "en", "There is already an account registered with that username");
         }
         if (result.hasErrors()) {
             return "registration";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.registerUser(user);
+        userRequestParams.setPassword(passwordEncoder.encode(userRequestParams.getPassword()));
+        userService.registerUser(userRequestParams);
         return "redirect:/registration?success";
     }
 
@@ -60,11 +58,8 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/user/{userId}")
-    public String updateUser( @Valid UserRequestParams userRequestParams, @PathVariable("userId") final Long userId, BindingResult result, Model model) {
-        model.addAttribute("user", this.userRepository.findById(userId).get());
-        if (result.hasErrors()){
-            return "redirect:/user/{userId}?";}
+    @PostMapping("/update/user/{userId}")
+    public String updateUser( @Valid @ModelAttribute("user") UserRequestParams userRequestParams, @PathVariable("userId") final Long userId, BindingResult result, Model model) {
         this.userService.updateUser(userRequestParams, userId);
         return "redirect:/user/{userId}?success";
     }
@@ -75,10 +70,10 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @DeleteMapping("/delete/user/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("userId") final Long userId) {
+    @PostMapping("/delete/{userId}")
+    public String deleteUser(@PathVariable("userId") final Long userId) {
         this.userService.deleteUserById(userId);
-        return ResponseEntity.ok().build();
+        return "home/homeNotSignedIn";
     }
 
     @PostMapping("/class/{userId}")

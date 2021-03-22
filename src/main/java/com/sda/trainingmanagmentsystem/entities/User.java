@@ -48,6 +48,7 @@ public class User implements UserDetails {
     private Set<Activities> modules;
     @ManyToOne
     @JoinColumn(name = "classesId")
+    @JsonIgnore
     private Classes classes;
     @OneToMany(mappedBy = "user")
     private Set<UserNotification> userNotifications;
@@ -76,8 +77,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    @AssertTrue(message = "Password must contain at least 4 characters")
-    public boolean validPassword() {
-        return password.length() > 3 && !password.isBlank();
-    }
+//    @AssertTrue(message = "Password must contain at least 4 characters")
+//    public boolean validPassword() {
+//        return password.length() > 3 && !password.isBlank();
+//    }
 }

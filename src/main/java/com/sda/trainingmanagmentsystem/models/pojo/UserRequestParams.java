@@ -29,7 +29,7 @@ public class UserRequestParams {
     private String username;
     @NotNull
     @NotEmpty
-    @Size(min = 4)
+    @Size(min = 4, message = "Password must be at least 4 characters")
     private String password;
 
     @AssertTrue(message = "Password must contain at least 4 characters")
