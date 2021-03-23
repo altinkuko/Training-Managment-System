@@ -46,28 +46,54 @@ public class UserController {
         return "redirect:/registration?success";
     }
 
-    @PostMapping("/register/instructor")
-    public ResponseEntity<User> postInstructor(@RequestBody @Valid final UserRequestParams userRequestParams) throws NotFoundException {
-        User user = this.userService.registerInstructor(userRequestParams);
-        return ResponseEntity.ok(user);
+    @GetMapping("/admin/registerInstructor")
+    public String showInstructorRegisterPage(@ModelAttribute("user") User user) {
+        return "admin/registerInstructor";
     }
 
-    @PostMapping("/register/admin")
-    public ResponseEntity<User> postAdmin(@RequestBody @Valid final UserRequestParams userRequestParams) throws NotFoundException {
-        User user = this.userService.registerAdministrator(userRequestParams);
-        return ResponseEntity.ok(user);
+    @PostMapping("/register/instructor")
+    public String postInstructor(@Valid @ModelAttribute("user") final UserRequestParams userRequestParams, BindingResult result) throws NotFoundException {
+        Optional<User> optionalUser = userRepository.findByUsername(userRequestParams.getUsername());
+        if (optionalUser.isPresent()) {
+            result.rejectValue("username", "en", "There is already an account registered with that username");
+        }
+        if (result.hasErrors()) {
+            return "admin/registerInstructor";
+        }
+        userRequestParams.setPassword(passwordEncoder.encode(userRequestParams.getPassword()));
+        this.userService.registerInstructor(userRequestParams);
+        return "redirect:/admin/registerInstructor?success";
+    }
+
+    @GetMapping("/admin/registerAdministrator")
+    public String showAdminRegisterPage(@ModelAttribute("user") User user) {
+        return "admin/registerAdministrator";
+    }
+
+    @PostMapping("/register/administrator")
+    public String registerAdmin(@Valid @ModelAttribute("user") final UserRequestParams userRequestParams, BindingResult result) throws NotFoundException {
+        Optional<User> optionalUser = userRepository.findByUsername(userRequestParams.getUsername());
+        if (optionalUser.isPresent()) {
+            result.rejectValue("username", "en", "There is already an account registered with that username");
+        }
+        if (result.hasErrors()) {
+            return "admin/registerAdministrator";
+        }
+        userRequestParams.setPassword(passwordEncoder.encode(userRequestParams.getPassword()));
+        this.userService.registerAdministrator(userRequestParams);
+        return "redirect:/admin/registerAdministrator?success";
     }
 
     @PostMapping("/update/user/{userId}")
-    public String updateUser( @Valid @ModelAttribute("user") UserRequestParams userRequestParams, @PathVariable("userId") final Long userId, BindingResult result, Model model) {
+    public String updateUser(@Valid @ModelAttribute("user") UserRequestParams userRequestParams, @PathVariable("userId") final Long userId, BindingResult result, Model model) {
         this.userService.updateUser(userRequestParams, userId);
         return "redirect:/user/{userId}?success";
     }
 
     @GetMapping("/users/{roleId}")
-    public ResponseEntity<List<User>> getStudents(@PathVariable("roleId") final Long roleId) {
-        List<User> users = this.userService.findUsersByRole(roleId);
-        return ResponseEntity.ok(users);
+    public String getStudents(@PathVariable("roleId") final Long roleId, Model model) {
+        model.addAttribute("users", this.userService.findUsersByRole(roleId));
+        return "admin/users";
     }
 
     @PostMapping("/delete/{userId}")
@@ -83,7 +109,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public String getUser(@PathVariable("userId") final Long userId, Model model){
+    public String getUser(@PathVariable("userId") final Long userId, Model model) {
         Optional<User> user = this.userRepository.findById(userId);
         model.addAttribute("user", user.get());
         return "user/userDetail";

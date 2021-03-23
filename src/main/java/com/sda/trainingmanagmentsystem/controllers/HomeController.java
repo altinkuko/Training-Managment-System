@@ -23,6 +23,11 @@ class HomeController {
     {model.addAttribute("user", this.profileController.getCurrentUser());
         return "home/homeSignedIn";
     }
+    @GetMapping("/admin/controlPanel")
+    public String controlPanel(Model model){
+        model.addAttribute("user", this.profileController.getCurrentUser());
+        return "admin/controlPanel";
+    }
 
 }
 

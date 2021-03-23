@@ -17,6 +17,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
                         .authorizeRequests()
                         .antMatchers(
                                 "/registration**",
+                                "/course**",
                                 "/**",
                                 "/js/**",
                                 "/css/**",

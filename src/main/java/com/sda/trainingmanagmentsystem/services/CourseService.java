@@ -22,9 +22,7 @@ public class CourseService {
     private ClassesRepository classesRepository;
 
 
-    public Course createCourse(final String courseName) {
-        Course course = new Course();
-        course.setCourseName(courseName);
+    public Course createCourse(final Course course) {
         return this.courseRepository.save(course);
     }
 
