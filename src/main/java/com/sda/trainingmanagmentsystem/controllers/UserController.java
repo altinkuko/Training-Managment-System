@@ -86,6 +86,7 @@ public class UserController {
 
     @PostMapping("/update/user/{userId}")
     public String updateUser(@Valid @ModelAttribute("user") UserRequestParams userRequestParams, @PathVariable("userId") final Long userId, BindingResult result, Model model) {
+        if (result.hasErrors()) return "/user/userDetail";
         this.userService.updateUser(userRequestParams, userId);
         return "redirect:/user/{userId}?success";
     }

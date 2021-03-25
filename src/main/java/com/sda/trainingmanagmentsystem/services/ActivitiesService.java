@@ -27,38 +27,39 @@ public class ActivitiesService {
     private ClassesRepository classesRepository;
     @Autowired
     private UserRepository userRepository;
-    public List<Activities> findActivitiesByDate (LocalDate date){
+
+    public List<Activities> findActivitiesByDate(LocalDate date) {
         return this.activitiesRepository.findActivitiesByDate(date);
     }
-    public List<Activities> listActivitiesByClasses(final Long classesId){
+
+    public List<Activities> listActivitiesByClasses(final Long classesId) {
         return this.activitiesRepository.listActivitiesByClasses(classesId);
     }
 
-    public Activities createActivities (final ActivitiesRequestParams activitiesRequestParams){
+    public Activities createActivities(final ActivitiesRequestParams activitiesRequestParams,
+                                       final Long userID,
+                                       final Long classesId) {
         Activities activities = new Activities();
         activities.setDate(activitiesRequestParams.getDate());
         activities.setSubject(activitiesRequestParams.getSubject());
-        Classes classes = this.classesRepository.findById(activitiesRequestParams.getClassId()).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
-        activities.setClasses(classes);
-        User user = this.userRepository.findById(activitiesRequestParams.getUserId())
-                .orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
-        activities.setInstructor(user);
+        activities.setClasses(this.classesRepository.findById(classesId).get());
+        activities.setInstructor(this.userRepository.findById(userID).get());
         return this.activitiesRepository.save(activities);
     }
 
-    public void deleteActivities(final Long activitiesId){
-        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+    public void deleteActivities(final Long activitiesId) {
+        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
         activities.setClasses(null);
         activities.setInstructor(null);
         this.activitiesRepository.delete(activities);
     }
 
-    public Activities updateActivities (final ActivitiesRequestParams activitiesRequestParams, final Long activitiesId){
-        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
-        activities.setDate(activitiesRequestParams.getDate());
-        activities.setSubject(activitiesRequestParams.getSubject());
-        activities.setInstructor(this.userRepository.findById(activitiesRequestParams.getUserId()).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
-        activities.setClasses(this.classesRepository.findById(activitiesRequestParams.getClassId()).orElseThrow(()-> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
+    public Activities updateActivities(final Long activitiesId, final Long userId, final Long classId) {
+        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        activities.setDate(activities.getDate());
+        activities.setSubject(activities.getSubject());
+        activities.setInstructor(this.userRepository.findById(userId).get());
+        activities.setClasses(this.classesRepository.findById(classId).get());
         return this.activitiesRepository.save(activities);
     }
 

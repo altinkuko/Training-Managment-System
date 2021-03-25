@@ -1,24 +1,35 @@
 package com.sda.trainingmanagmentsystem.controllers;
 
 import com.sda.trainingmanagmentsystem.entities.Classes;
+import com.sda.trainingmanagmentsystem.entities.Course;
 import com.sda.trainingmanagmentsystem.entities.Notification;
 import com.sda.trainingmanagmentsystem.entities.UserNotification;
 import com.sda.trainingmanagmentsystem.models.pojo.NotificationRequestParams;
+import com.sda.trainingmanagmentsystem.repositories.ClassesRepository;
+import com.sda.trainingmanagmentsystem.repositories.CourseRepository;
 import com.sda.trainingmanagmentsystem.services.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/class/")
+@RequestMapping("/class")
 public class ClassesController {
     @Autowired
     private ClassesService classesService;
+    @Autowired
+    private ClassesRepository classesRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @PostMapping("/notification/{classId}")
     public ResponseEntity<List<UserNotification>> postClassesNotification(@RequestBody final NotificationRequestParams notification, @PathVariable("classId") final Long classId) {
@@ -26,16 +37,43 @@ public class ClassesController {
         return ResponseEntity.ok(userNotifications);
     }
 
+    @GetMapping("/create")
+    public String showCreateClassPage(@ModelAttribute("class") Classes classes, Model model){
+        List<Course> courses = this.courseRepository.findAll();
+        model.addAttribute("courses", courses);
+        return "/admin/createClass";
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<Classes> createClasses(@RequestParam("className") final String className) {
-        Classes classes = this.classesService.createClass(className);
-        return ResponseEntity.ok(classes);
+    public String createClasses(@Valid @ModelAttribute("class") final Classes classes, @RequestParam("courseId") final Long courseId, BindingResult result, Model model) {
+        List<Course> courses=this.courseRepository.findAll();
+        model.addAttribute("courses", courses);
+        Optional<Classes> existingClass = this.classesRepository.findClassesByClassName(classes.getClassName());
+        if (existingClass.isPresent())
+                result.rejectValue("className", "en", "There is already an class with that name");
+        if (result.hasErrors()) return "/admin/createClass";
+                this.classesService.createClass(classes, courseId);
+        return "redirect:/class/create?success";
+    }
+
+    @GetMapping("/edit/{classId}")
+    public String showClassDetail(@PathVariable("classId") final Long classId,
+                                  Model model){
+        Optional<Classes> classes = this.classesRepository.findById(classId);
+        model.addAttribute("class", classes.get());
+        model.addAttribute("courses", this.courseRepository.findAll());
+        return "/admin/editClass";
     }
 
     @PostMapping("/update/{classId}")
-    public ResponseEntity<Classes> updateClasses(@PathVariable("classId") final Long classId, @RequestParam("courseId") final Long courseId) {
-        Classes classes = this.classesService.updateClass(classId, courseId);
-        return ResponseEntity.ok(classes);
+    public String updateClass(@PathVariable("classId") final Long classId,
+                              @RequestParam("courseId") final Long courseId,
+                              @Valid @ModelAttribute("class") Classes classes, Model model, BindingResult result) {
+        List<Course> courses = this.courseRepository.findAll();
+        model.addAttribute("courses", courses);
+        if (result.hasErrors()) return "/admin/editClass";
+        this.classesService.updateClass(classId, courseId);
+        return "redirect:/class/classes?success";
     }
 
     @GetMapping("/classes/{userId}")
@@ -43,20 +81,27 @@ public class ClassesController {
         List<Classes> classesList = this.classesService.readClassesByInstructor(userId);
         return ResponseEntity.ok(classesList);
     }
+
     @PostMapping("/inactive/{classId}")
-    public ResponseEntity<Classes> setInactiveClass(@PathVariable("classId") final Long classId){
-        Classes classes = this.classesService.setInactiveClass(classId);
-        return ResponseEntity.ok(classes);
+    public String setInactiveClass(@PathVariable("classId") final Long classId, @ModelAttribute("class") final Classes classes){
+        this.classesService.setInactiveClass(classId);
+        return "redirect:/class/classes?success";
     }
     @PostMapping("/activate/{classId}")
-    public ResponseEntity<Classes> activateClass(@PathVariable("classId") final Long classId){
-        Classes classes = this.classesService.setActiveClass(classId);
-        return ResponseEntity.ok(classes);
+    public String activateClass(@PathVariable("classId") final Long classId, @ModelAttribute("class") final Classes classes){
+        this.classesService.setActiveClass(classId);
+        return "redirect:/class/classes?success";
     }
 
     @PostMapping("/upload/{classId}")
     public ResponseEntity<Classes> uploadFile(@PathVariable("classId") final Long classId, @RequestParam("file") MultipartFile file) throws IOException {
         Classes classes = this.classesService.uploadFile(classId,file);
         return ResponseEntity.ok(classes);
+    }
+    @GetMapping("/classes")
+    public String showAllClasses(Model model, @ModelAttribute("course") Course course){
+        List<Classes> classes = this.classesRepository.findAll();
+        model.addAttribute("classes", classes);
+        return "/admin/classes";
     }
 }

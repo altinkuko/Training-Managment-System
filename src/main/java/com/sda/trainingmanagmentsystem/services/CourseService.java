@@ -26,10 +26,11 @@ public class CourseService {
         return this.courseRepository.save(course);
     }
 
-    public Course updateCourse(final Long courseId, final String courseName) {
-        Course course = this.courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
-        course.setCourseName(courseName);
-        return this.courseRepository.save(course);
+    public Course updateCourse(final Long courseId, final Course course) {
+        Course existingCourse = this.courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        existingCourse.setCourseName(course.getCourseName());
+        existingCourse.setCourseDescription(course.getCourseDescription());
+        return this.courseRepository.save(existingCourse);
     }
 
     public List<Course> readCoursesByInstructor(final Long userId) {

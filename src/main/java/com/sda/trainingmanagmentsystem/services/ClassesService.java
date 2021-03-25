@@ -46,10 +46,9 @@ public class ClassesService {
         }).collect(Collectors.toList());
     }
 
-    public Classes createClass(final String className) {
-        Classes classes = new Classes();
-        classes.setClassName(className);
+    public Classes createClass(final Classes classes, final Long courseId) {
         classes.setActive(true);
+        classes.setCourse(this.courseRepository.findById(courseId).get());
         return this.classesRepository.save(classes);
     }
 
@@ -58,7 +57,7 @@ public class ClassesService {
         classes.setClassName(classes.getClassName());
         classes.setCourse(this.courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION)));
         return this.classesRepository.save(classes);
-    }
+            }
 
     public List<Classes> readClassesByInstructor(final Long userId) {
         return this.classesRepository.findClassesByInstructor(userId);
