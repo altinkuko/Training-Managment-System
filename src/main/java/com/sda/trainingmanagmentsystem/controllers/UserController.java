@@ -103,12 +103,6 @@ public class UserController {
         return "home/homeNotSignedIn";
     }
 
-    @PostMapping("/class/{userId}")
-    public ResponseEntity<User> assignUserToClass(@PathVariable("userId") final Long userId, @RequestParam("classId") final Long classId) {
-        User user = this.userService.assignUserToClass(userId, classId);
-        return ResponseEntity.ok(user);
-    }
-
     @GetMapping("/user/{userId}")
     public String getUser(@PathVariable("userId") final Long userId, Model model) {
         Optional<User> user = this.userRepository.findById(userId);

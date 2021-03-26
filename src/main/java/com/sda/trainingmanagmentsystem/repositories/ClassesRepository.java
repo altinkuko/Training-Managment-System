@@ -15,6 +15,8 @@ public interface ClassesRepository extends JpaRepository<Classes, Long> {
     List<Classes> findClassesByInstructor(@Param("userId") final Long userId);
 
     Optional<Classes> findClassesByClassName(final String className);
+    @Query(value = "select c from Classes c join c.students s where s.userId = :userId")
+    Classes findClassByStudent(@Param("userId") final Long userId);
 
 
 }

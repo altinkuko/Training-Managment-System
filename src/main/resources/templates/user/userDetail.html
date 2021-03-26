@@ -58,8 +58,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" placeholder="Password" th:field="*{password}" class="form-control"
+                    <label th:value="${user.password}" for="password">Password:</label>
+                    <input type="password" placeholder="Password" class="form-control"
                            id="password" minlength="4" required>
                     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
                 </div>

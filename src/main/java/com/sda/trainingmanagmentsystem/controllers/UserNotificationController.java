@@ -19,12 +19,14 @@ public class UserNotificationController {
 
     @PostMapping("/notification/{id}")
     public ResponseEntity<UserNotification> setNotificationRead (@PathVariable("id") final Long notificationId){
-        UserNotification userNotification = this.userNotificationService.setRead(notificationId);
+        UserNotification userNotification =
+                this.userNotificationService.setRead(notificationId);
         return ResponseEntity.ok(userNotification);
     }
     @GetMapping("/notifications/{userId}")
     public ResponseEntity<List<UserNotification>> listUserNotificationForUser(@PathVariable("userId") final Long userId){
-        List<UserNotification> userNotifications = this.userNotificationService.findNotificationByUserId(userId);
+        List<UserNotification> userNotifications =
+                this.userNotificationService.findNotificationByUserId(userId);
         return ResponseEntity.ok(userNotifications);
     }
 }

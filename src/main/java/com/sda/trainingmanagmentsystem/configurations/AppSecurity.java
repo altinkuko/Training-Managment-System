@@ -17,13 +17,16 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
                         .authorizeRequests()
                         .antMatchers(
                                 "/registration**",
-                                "/course**",
-                                "/**",
+                                "/",
                                 "/js/**",
                                 "/css/**",
                                 "/img/**",
                                 "/webjars/**")
                         .permitAll()
+                        .and()
+                        .authorizeRequests()
+//                        .antMatchers("/admin/**").hasRole("ADMIN")
+//                        .antMatchers("/courses**").hasRole("STUDENT")
                         .anyRequest().authenticated()
                         .and()
                         .formLogin()
@@ -35,7 +38,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/")
                         .permitAll()
                         .and()
                         .headers().frameOptions().disable()

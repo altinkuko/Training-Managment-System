@@ -2,7 +2,9 @@ package com.sda.trainingmanagmentsystem.services;
 
 import com.sda.trainingmanagmentsystem.constants.ErrorMessages;
 import com.sda.trainingmanagmentsystem.entities.ParticipantApplication;
+import com.sda.trainingmanagmentsystem.entities.User;
 import com.sda.trainingmanagmentsystem.models.errors.NotFoundException;
+import com.sda.trainingmanagmentsystem.repositories.ClassesRepository;
 import com.sda.trainingmanagmentsystem.repositories.CourseRepository;
 import com.sda.trainingmanagmentsystem.repositories.ParticipantApplicationRepository;
 import com.sda.trainingmanagmentsystem.repositories.UserRepository;
@@ -24,6 +26,8 @@ public class ParticipantApplicationService {
     private UserRepository userRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ClassesRepository classesRepository;
 
     public Boolean isRegister(final Long userId, final Long courseId) {
         boolean isRegister = false;
@@ -51,9 +55,11 @@ public class ParticipantApplicationService {
         else return participantApplication;
     }
 
-    public ParticipantApplication acceptApplication(final Long applicationId) {
+    public ParticipantApplication acceptApplication(final Long applicationId, final Long userId, final Long classId) {
         ParticipantApplication participantApplication = this.participantApplicationRepository.findById(applicationId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
         participantApplication.setAccepted(true);
+        User user=this.userRepository.findById(userId).get();
+        user.setClasses(this.classesRepository.findById(classId).get());
         return this.participantApplicationRepository.save(participantApplication);
     }
     public List<ParticipantApplication> listUnacceptedApplication(){

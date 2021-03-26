@@ -62,5 +62,8 @@ public class ActivitiesService {
         activities.setClasses(this.classesRepository.findById(classId).get());
         return this.activitiesRepository.save(activities);
     }
+public List<Activities> listInstructorActivities(final Long userId){
+        return this.activitiesRepository.findActivitiesByInstructor(userId);
+}
 
 }

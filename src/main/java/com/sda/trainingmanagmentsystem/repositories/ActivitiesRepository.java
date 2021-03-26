@@ -12,8 +12,10 @@ import java.util.List;
 @Repository
 public interface ActivitiesRepository extends JpaRepository<Activities, Long> {
     @Query(value = "select a from Activities a where a.date = :dates")
-    public List<Activities> findActivitiesByDate(@Param("dates") final LocalDate date);
+     List<Activities> findActivitiesByDate(@Param("dates") final LocalDate date);
 
     @Query(value = "select a from Activities a join a.classes c where c.classesId = :classesId")
-    public List<Activities> listActivitiesByClasses(@Param("classesId")final Long classesId);
+     List<Activities> listActivitiesByClasses(@Param("classesId")final Long classesId);
+    @Query(value = "select a from Activities a join a.instructor i where i.userId = :userId")
+    List<Activities> findActivitiesByInstructor(@Param("userId") final Long userId);
 }

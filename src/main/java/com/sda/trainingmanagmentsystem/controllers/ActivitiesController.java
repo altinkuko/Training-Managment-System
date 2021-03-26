@@ -30,6 +30,8 @@ public class ActivitiesController {
     private ClassesRepository classesRepository;
     @Autowired
     private ActivitiesRepository activitiesRepository;
+    @Autowired
+    private ProfileController profileController;
 
     @GetMapping("/module/{date}")
     public ResponseEntity<List<Activities>> listActivitiesByDate(@PathVariable("date") LocalDate date) {
@@ -38,9 +40,12 @@ public class ActivitiesController {
     }
 
     @GetMapping("/modules/{gcId}")
-    public ResponseEntity<List<Activities>> listActivitiesByGroupClasses(@PathVariable("gcId") final Long classId) {
+    public String listActivitiesByGroupClasses(@PathVariable("gcId") final Long classId,
+                                               Model model) {
         List<Activities> activities = this.activitiesService.listActivitiesByClasses(classId);
-        return ResponseEntity.ok(activities);
+        model.addAttribute("activities", activities);
+        model.addAttribute("class", this.classesRepository.findById(classId).get());
+        return "/user/activities";
     }
 
     @GetMapping("/all")
@@ -69,10 +74,10 @@ public class ActivitiesController {
         model.addAttribute("classes", this.classesRepository.findAll());
         return "redirect:/activities/create?success";
     }
-    @DeleteMapping("/delete/{activitiesId}")
-    public ResponseEntity<Void> deleteActivities(@PathVariable("activitiesId") final Long activitiesId){
+    @PostMapping("/delete/{activitiesId}")
+    public String deleteActivities(@PathVariable("activitiesId") final Long activitiesId){
         this.activitiesService.deleteActivities(activitiesId);
-        return ResponseEntity.ok().build();
+        return "redirect:/activities/all?delete";
     }
     @PostMapping("/update/{activitiesId}")
     public String updateActivities(@PathVariable("activitiesId") final Long activitiesId,
@@ -93,5 +98,13 @@ public class ActivitiesController {
                 model.addAttribute("users", this.userRepository.findUsersByRole(2L));
                 model.addAttribute("classes", this.classesRepository.findAll());
                 return "/admin/editActivities";
+    }
+
+    @GetMapping("/instructor/{userId}")
+    public String showInstructorClasses(@PathVariable("userId") final Long userId, Model model){
+        List<Activities> activities = this.activitiesService.listInstructorActivities(userId);
+        model.addAttribute("activities", activities);
+        model.addAttribute("user", this.profileController.getCurrentUser());
+        return "/instructor/classes";
     }
 }

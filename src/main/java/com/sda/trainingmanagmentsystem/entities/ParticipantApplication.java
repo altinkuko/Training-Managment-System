@@ -19,9 +19,11 @@ public class ParticipantApplication {
     private Long participantApplicationId;
     private LocalDate date;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "userId")
     private User user;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "courseId")
     private Course course;
     private Boolean accepted;

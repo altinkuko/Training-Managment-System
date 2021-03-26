@@ -30,6 +30,8 @@ public class ClassesController {
     private ClassesRepository classesRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ProfileController profileController;
 
     @PostMapping("/notification/{classId}")
     public ResponseEntity<List<UserNotification>> postClassesNotification(@RequestBody final NotificationRequestParams notification, @PathVariable("classId") final Long classId) {
@@ -77,9 +79,11 @@ public class ClassesController {
     }
 
     @GetMapping("/classes/{userId}")
-    public ResponseEntity<List<Classes>> findClassesByInstructor(@PathVariable("userId") final Long userId){
+    public String findClassesByInstructor(@PathVariable("userId") final Long userId, Model model){
         List<Classes> classesList = this.classesService.readClassesByInstructor(userId);
-        return ResponseEntity.ok(classesList);
+        model.addAttribute("classes", classesList);
+        model.addAttribute("user", this.profileController.getCurrentUser());
+        return "";
     }
 
     @PostMapping("/inactive/{classId}")
@@ -103,5 +107,14 @@ public class ClassesController {
         List<Classes> classes = this.classesRepository.findAll();
         model.addAttribute("classes", classes);
         return "/admin/classes";
+    }
+
+    @GetMapping("/class/{userId}")
+    public String showStudentClass(@PathVariable("userId") final Long userId, Model model){
+       Classes classes = this.classesRepository.findClassByStudent(userId);
+       model.addAttribute("students", classes.getStudents());
+       model.addAttribute("user", this.profileController.getCurrentUser());
+       model.addAttribute("class", classes);
+       return "/user/class";
     }
 }

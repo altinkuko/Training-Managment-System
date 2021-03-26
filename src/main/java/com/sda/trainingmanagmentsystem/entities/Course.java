@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,5 +30,5 @@ public class Course {
     private Set<ParticipantApplication> participantApplication;
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private Set<Classes> groups;
+    private List<Classes> groups;
 }

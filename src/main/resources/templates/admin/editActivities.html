@@ -67,6 +67,15 @@
             </div>
         </div>
     </form>
+    <form th:action="@{/activities/delete/{activitiesId}(activitiesId=${module.activitiesId})}" method="post" th:object="${module}">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="form-control btn btn-danger">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>
