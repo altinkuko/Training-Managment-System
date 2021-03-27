@@ -15,21 +15,17 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
                 .and().authorizeRequests().antMatchers("/registration").permitAll()
                 .and()
-                .formLogin().loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .permitAll()
+                    .formLogin().loginPage("/login")
+                    .defaultSuccessUrl("/home")
+                    .permitAll()
                 .and().logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .permitAll()
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
+                        .permitAll()
                 .and().headers().frameOptions().disable()
                 .and().cors().disable();
-    }
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
 

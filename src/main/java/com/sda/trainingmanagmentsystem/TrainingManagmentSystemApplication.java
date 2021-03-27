@@ -2,6 +2,8 @@ package com.sda.trainingmanagmentsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class TrainingManagmentSystemApplication {
@@ -9,5 +11,8 @@ public class TrainingManagmentSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrainingManagmentSystemApplication.class, args);
 	}
-
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
