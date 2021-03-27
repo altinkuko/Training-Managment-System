@@ -35,7 +35,7 @@
             <tbody>
 
             <tr th:each="notification: ${notifications}">
-                <td th:text="${notification.notification.subject}"></td>
+                <td ><b th:if="${notification.isRead == false}" th:text="${notification.notification.subject}"></b><p th:unless="${notification.isRead == false}" th:text="${notification.notification.subject}"></p></td>
                 <td th:text="${notification.notification.date}"></td>
                 <td ><a th:href="@{/user/notification/{id}(id=${notification.notificationReadId})}" class="btn btn-info mr-3"><i class="far fa-sticky-note"></i></a></td>
             </tr>
