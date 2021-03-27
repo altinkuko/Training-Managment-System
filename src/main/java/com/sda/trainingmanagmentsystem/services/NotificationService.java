@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -25,7 +26,7 @@ public class NotificationService {
 
     public Notification saveNotification(final NotificationRequestParams notificationRequestParams) {
         Notification notification = new Notification();
-        notification.setDate(notificationRequestParams.getDate());
+        notification.setDate(LocalDate.now());
         notification.setContent(notificationRequestParams.getContent());
         notification.setSubject(notificationRequestParams.getSubject());
         return this.notificationRepository.save(notification);
