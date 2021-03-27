@@ -14,6 +14,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
                 .and().authorizeRequests().antMatchers("/registration").permitAll()
+                .antMatchers("/courses/**").authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home")
