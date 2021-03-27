@@ -34,9 +34,12 @@ public class ClassesController {
     private ProfileController profileController;
 
     @PostMapping("/notification/{classId}")
-    public ResponseEntity<List<UserNotification>> postClassesNotification(@RequestBody final NotificationRequestParams notification, @PathVariable("classId") final Long classId) {
+    public String postClassesNotification(@ModelAttribute("notification") final NotificationRequestParams notification,
+                                          @PathVariable("classId") final Long classId,
+                                          Model model) {
         List<UserNotification> userNotifications = this.classesService.postClassNotification(notification, classId);
-        return ResponseEntity.ok(userNotifications);
+        model.addAttribute("class", this.classesRepository.findById(classId).get());
+        return "redirect:/notification/{classId}?success";
     }
 
     @GetMapping("/create")
@@ -83,7 +86,7 @@ public class ClassesController {
         List<Classes> classesList = this.classesService.readClassesByInstructor(userId);
         model.addAttribute("classes", classesList);
         model.addAttribute("user", this.profileController.getCurrentUser());
-        return "";
+        return "/instructor/classes";
     }
 
     @PostMapping("/inactive/{classId}")
@@ -116,5 +119,11 @@ public class ClassesController {
        model.addAttribute("user", this.profileController.getCurrentUser());
        model.addAttribute("class", classes);
        return "/user/class";
+    }
+    @GetMapping("/{classId}")
+    public String showClass(@PathVariable("classId") final Long classId, Model model){
+        model.addAttribute("class", this.classesRepository.findById(classId).get());
+        model.addAttribute("students", this.classesRepository.findById(classId).get().getStudents());
+        return "/instructor/class";
     }
 }

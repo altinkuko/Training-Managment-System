@@ -13,13 +13,14 @@
 <div th:replace="headerLogin :: headerLogin"></div>
 <div class="row">
     <div class="col-sm-4 mb-5">
-        <div th:if="${#lists.isEmpty(activities)}"><h2>No Classes!</h2></div>
+        <div th:if="${#lists.isEmpty(students)}"><h2>No Students!</h2></div>
     </div>
 </div>
 
 <div class="row ml-4">
     <div class="col-sm-4 mb-5">
-        <h2 th:text="${user.firstName+' '+user.lastName}"></h2>
+        <h2 th:text="${class.className}"></h2>
+        <a th:href="@{/notification/{classId}(classId = ${class.classesId})}" class="btn btn-info"><i class="far fa-sticky-note"> Send Notification</i></a>
     </div>
 </div>
 <div class="row ml-4">
@@ -27,19 +28,13 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Class</th>
-                <th>Date</th>
-                <th>Subject</th>
-                <th>See class</th>
+                <th>Students</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr th:each="module: ${activities}">
-                <td th:text="${module.classes.className}"></td>
-                <td th:text="${module.date}"></td>
-                <td th:text="${module.subject}"></td>
-                <td ><a th:href="@{/class/{classId}(classId=${module.classes.classesId})}" class="btn btn-info mr-3"><i class="fas fa-chalkboard"></i></a></td>
+            <tr th:each="student: ${students}">
+                <td th:text="${student.firstName+' '+student.lastName}"></td>
             </tr>
             </tbody>
         </table>
