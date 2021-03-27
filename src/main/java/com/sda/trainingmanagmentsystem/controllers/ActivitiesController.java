@@ -1,8 +1,6 @@
 package com.sda.trainingmanagmentsystem.controllers;
 
 import com.sda.trainingmanagmentsystem.entities.Activities;
-import com.sda.trainingmanagmentsystem.entities.Classes;
-import com.sda.trainingmanagmentsystem.entities.User;
 import com.sda.trainingmanagmentsystem.models.pojo.ActivitiesRequestParams;
 import com.sda.trainingmanagmentsystem.repositories.ActivitiesRepository;
 import com.sda.trainingmanagmentsystem.repositories.ClassesRepository;
