@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Create Class</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+<body>
+<div th:replace="headerLogin :: headerLogin"></div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully created e new Class</div>
+            </div>
+            <h2>Create Class</h2>
+        </div>
+    </div>
+    <form th:action="@{/class/create}" th:method="post" th:object="${class}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="className">Class Name:</label>
+                    <input type="text" placeholder="Class Name" th:field="*{className}" class="form-control"
+                           id="className">
+                    <span th:if="${#fields.hasErrors('className')}" th:errors="*{className}" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="course">Choose course</label>
+            <select class="form-control selectpicker" th:name="courseId" id="course">
+                <option th:each="course : ${courses}"
+                        th:value="${course.courseId}"
+                        th:text="${course.courseName}">
+                </option>
+            </select>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Create Class" class="form-control btn btn-success">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -2,13 +2,18 @@ package com.sda.trainingmanagmentsystem.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -17,13 +22,19 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @NotNull
+    @NotEmpty(message = "Must have a Name")
     private String firstName;
     private String lastName;
+    @Email(message = "Not a valid email address")
     private String email;
+    @NotNull
+    @NotEmpty(message = "Required field")
     private String username;
     private String password;
     @ManyToOne
@@ -37,6 +48,7 @@ public class User implements UserDetails {
     private Set<Activities> modules;
     @ManyToOne
     @JoinColumn(name = "classesId")
+    @JsonIgnore
     private Classes classes;
     @OneToMany(mappedBy = "user")
     private Set<UserNotification> userNotifications;
@@ -65,4 +77,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+//    @AssertTrue(message = "Password must contain at least 4 characters")
+//    public boolean validPassword() {
+//        return password.length() > 3 && !password.isBlank();
+//    }
 }

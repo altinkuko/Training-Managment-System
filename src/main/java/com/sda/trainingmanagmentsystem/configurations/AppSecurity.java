@@ -2,31 +2,53 @@ package com.sda.trainingmanagmentsystem.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class AppSecurity extends WebSecurityConfigurerAdapter {
-        @Override
+            @Override
         protected void configure(HttpSecurity http) throws Exception {
-            HttpSecurity disable = http.authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and().httpBasic()
-                    .and().formLogin().and().logout()
-                    .and().headers().frameOptions().disable()
-                    .and().csrf().disable();
-        }
-        @Bean
-        public PasswordEncoder generateEncoder() {
-            return new BCryptPasswordEncoder();
-        }
+                http
+                        .authorizeRequests()
+                        .antMatchers(
+                                "/registration**",
+                                "/",
+                                "/js/**",
+                                "/css/**",
+                                "/img/**",
+                                "/webjars/**")
+                        .permitAll()
+                        .and()
+                        .authorizeRequests()
+//                        .antMatchers("/admin/**").hasRole("ADMIN")
+//                        .antMatchers("/courses**").hasRole("STUDENT")
+                        .anyRequest().authenticated()
+                        .and()
+                        .formLogin()
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home")
+                        .permitAll()
+                        .and()
+                        .logout()
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                        .and()
+                        .headers().frameOptions().disable()
+                        .and()
+                        .cors().disable();
+            }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+}
 
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+<body>
+<div th:replace="headerLogin :: headerLogin"></div>
+<div class="container mt-4">
+    <div class="row mt-2 text-center">
+        <div class="col-3">
+            <a th:href="@{/activities/instructor/{userId}(userId = ${user.userId})}" class="btn btn-info">Your Classes</a>
+        </div>
+<!--        <div class="col-3">-->
+<!--            <a th:href="@{/users/{roleId}(roleId=2)}" class="btn btn-info">Instructors</a>-->
+<!--        </div>-->
+<!--        <div class="col-3">-->
+<!--            <a th:href="@{/admin/registerAdministrator}" class="btn btn-info">Register Administrator</a>-->
+<!--        </div>-->
+<!--        <div class="col-3">-->
+<!--            <a th:href="@{/users/{roleId}(roleId=1)}" class="btn btn-info">Administrators</a>-->
+<!--        </div>-->
+    </div>
+</div>
+
+
+</body>
+</html>
