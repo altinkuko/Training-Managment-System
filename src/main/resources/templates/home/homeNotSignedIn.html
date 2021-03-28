@@ -11,17 +11,25 @@
     <link rel="stylesheet" href="https://sdacademy.dev/vs-assets/themes/voilastudio/style.min.css?ver=1.343.12944">
 </head>
 
-<body>
-<div th:replace="header :: header"></div>
-<div class="background-section main-page">
-    <div class="single-wrapper text-left">
-        <div class="inner">
+<body >
+
+<div class="background-section main-page"style="background-image: url('/images/banner.jpg'); background-repeat:no-repeat;" >
+    <div class="single-wrapper text-left" >
+        <div class="inner" >
             <p><br class="d-none d-sm-block"><br class="d-none d-sm-block"><br class="d-none d-sm-block"><br class="d-none d-sm-block"></p>
             <h1 style="text-align: left; color: #ffffff; text-shadow: 3px 3px 1px #350000;">Want to be a hero?</h1>
             <h1 style="text-align: left; color: #ffffff; text-shadow: 3px 3px 1px #350000;">Join IT industry!</h1>
+            <p style="text-align: left; color: #ffffff;">Participation in software development courses organized <br>
+                by SDA will allow you enhance key competencies such as<br>
+                interdisciplinarity, innovativeness, teamwork and design method work.</p>
+            <div class="float-left ">
+                <p>
+                    <a th:href="@{/login}"  class="btn btn-light"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                    <a th:href="@{/registration}" class="btn btn-secondary"> Sign up</a>
+                </p>
+            </div>
         </div>
-        <div class="inner">
-        </div>
+
     </div>
     <div class="second-wrapper">
         <div class="wrapper d-flex justify-content-between flex-wrap">
@@ -50,8 +58,118 @@
                 </div>
             </div>
         </div>
-    </div></div>
-<div id="" class="container spacer what-you-will-learn mt-5 fade">
+    </div>
+</div>
+<!-- /hand-crafted -->
+<section class="hand-crafted bg-light py-5">
+    <div class="container py-xl-5 py-lg-3">
+        <div class="row banner-grids">
+            <div class="col-md-6 banner-image">
+                <div class="effect-w3">
+                    <img src="images/img.jpg" alt="" class="img-fluid image1">
+
+                </div>
+
+            </div>
+            <div class="col-md-6 last-img pl-lg-5 p-3">
+                <h3 class="tittle my-lg-5 my-3"><span class="sub-tittle"> Now You can get </span>The Best Education for Bright Future</h3>
+                <p class="mb-4"> This course is designed to provide students with a working knowledge of computer concepts and essential skills necessary for work and communication in today's society. Students will learn safety, security, and ethical issues in computing and social networking.</p>
+                <p class="mb-4">Learning how to code gives you more professional opportunities, increases your attrictiveness on the job market and provides higher salary.
+                    It's a source of great satisfaction and valuable investment in your future.</p>
+
+                    <button class="btn-primary" onclick="location.href='/courses/'" type="button">
+                        See more</button>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //hand-crafted -->
+<!--/ab -->
+<section class="about bg-secondary-light py-lg-5 py-md-5 py-3">
+    <div class="container">
+
+            <!-- services -->
+            <div class="fetured-info pt-lg-5 pt-3 mt-4">
+                <h3 class="tittle text-center my-lg-5 my-3"><span class="sub-tittle">What  do we give you.</span></h3>
+                <div class="row fetured-sec mt-lg-5">
+
+                    <div class="col-lg-6 serv_bottom">
+                        <div class="featured-left text-center row">
+                            <div class="col-lg-6">
+                                <div class="bottom-gd fea">
+                                    <span class="fa fa-crosshairs" aria-hidden="true"></span>
+                                    <h3 class="my-3">Python from scratch</h3>
+                                    <p class="px-lg-3">Integer sit amet mattis quam, sit amet ultricies velit...</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="bottom-gd fea active">
+                                    <span class="fa fa-laptop" aria-hidden="true"></span>
+                                    <h3 class="my-3"> Interface design</h3>
+                                    <p class="px-lg-3">Integer sit amet mattis quam, sit amet ultricies velit...</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="bottom-gd fea">
+                                    <span class="fa fa-clone" aria-hidden="true"></span>
+                                    <h3 class="my-3">Java from scratch</h3>
+                                    <p class="px-lg-3">Integer sit amet mattis quam, sit amet ultricies velit...</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="bottom-gd fea">
+                                    <span class="fa fa-eye" aria-hidden="true"></span>
+                                    <h3 class="my-3">Javascript</h3>
+                                    <p class="px-lg-3">Integer sit amet mattis quam, sit amet ultricies velit...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="images/img1.jpg" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- //services -->
+        </div>
+    </div>
+</section>
+<!-- //ab -->
+<!--/counter-->
+<section class="stats bg-light py-lg-5 py-4">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <div class="counter">
+                    <h3 class="statistic-counter counter-value" data-count="1500">1500</h3>
+                    <p class="count-text ">Support</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <h3 class="statistic-counter counter-value" data-count="1700">1700</h3>
+                    <p class="count-text ">Happy Hours</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <h3 class="statistic-counter counter-value" data-count="1900">1900</h3>
+                    <p class="count-text ">Project Complete</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <h3 class="statistic-counter counter-value" data-count="157">157</h3>
+                    <p class="count-text ">Cups of Coffee</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//counter-->
+<div id="" class="container spacer what-you-will-learn bg-secondary-light mt-5 fade">
     <h2>Learn how to code and change your life!</h2>
     <p></p>
     <div class="row">
@@ -78,6 +196,118 @@
         </div>
     </div>
 </div>
+<!--//team -->
+<section class="banner-bottom bg-light py-lg-5 py-4">
+    <div class="container">
+        <div class="inner-sec-w3ls py-lg-5 py-4">
+            <h3 class="tittle text-center my-lg-5 my-3"><span class="sub-tittle">Amazing People</span> Our Great Professors</h3>
+            <div class="row mt-lg-5 mt-4">
+                <div class="col-md-4 team-gd text-center">
+                    <div class="team-img mb-4">
+                        <img src="images/team.jpg" class="img-fluid rounded-circle" alt="user-image">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="mt-md-4 mt-3"><span class="sub-tittle-team">Professor</span> Jason Donoghue</h3>
+                        <p>Lorem Ipsum has been the industry's standard since the 1500s.</p>
 
+                    </div>
+                </div>
+
+                <div class="col-md-4 team-gd second text-center">
+                    <div class="team-img mb-4">
+                        <img src="images/team1.jpg" class="img-fluid rounded-circle" alt="user-image">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="mt-md-4 mt-3"><span class="sub-tittle-team">Professor</span> Mariana Noe</h3>
+                        <p>Lorem Ipsum has been the industry's standard since the 1500s.</p>
+
+                    </div>
+                </div>
+                <div class="col-md-4 team-gd text-center">
+                    <div class="team-img mb-4">
+                        <img src="images/team2.jpg" class="img-fluid rounded-circle" alt="user-image">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="mt-md-4 mt-3"><span class="sub-tittle-team">Professor</span> Daniel Doe</h3>
+                        <p>Lorem Ipsum has been the industry's standard since the 1500s.</p>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!--//team -->
+<section class="testimonials bg-secondary-light py-5" id="testi">
+    <div class="container py-xl-5 py-lg-3">
+        <h3 class="tittle text-center mb-lg-5 mb-3"><span class="sub-tittle">See what people are saying</span> </h3>
+        <div class="row">
+            <div class="col-lg-6 testimonials_grid">
+                <div class="bg-white rounded p-lg-5 p-3">
+                    <p class="sub-test"><span class="fa fa-quote-left" aria-hidden="true"></span> Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod possimus, omnis voluptas.
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-3 testi-img-res">
+                            <img src="images/te1.jpg" alt=" " class="img-fluid" />
+                        </div>
+                        <div class="col-9 testi_grid mt-xl-3 mt-lg-2 mt-md-4 mt-2">
+                            <h5 class="mb-2">Thomas Carl</h5>
+                            <p>Add Some Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 testimonials_grid mt-lg-0 mt-4">
+                <div class="bg-white rounded p-lg-5 p-3">
+                    <p class="sub-test"><span class="fa fa-quote-left" aria-hidden="true"></span> Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod possimus, omnis voluptas.
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-3 testi-img-res">
+                            <img src="images/te2.jpg" alt=" " class="img-fluid" />
+                        </div>
+                        <div class="col-9 testi_grid  mt-xl-3 mt-lg-2 mt-md-4 mt-2">
+                            <h5 class="mb-2">Adam Ster</h5>
+                            <p>Add Some Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- //testimonials -->
+<!-- //fotter -->
+<footer>
+    <div class="container-fluid">
+        <div class="row" id="top-footer">
+            <div class="bg-lighter d-flex justify-content-center align-items-center py-3 col-12 flex-wrap">
+                <i class="vico big ico-newsletter"></i>
+                <p class="my-0 mx-lg-5 p-3 text-center"><strong>Want to learn how to start and develop your IT career?</strong></p>
+                <button class="btn btn-secondary" onclick="location.href='/courses/'" type="button">
+                    See more</button></div>
+        </div>
+
+        <div class="container" style="background-image: url('/images/banner.jpg'); background-repeat:no-repeat;">
+            <div class="row my-5 d-flex">
+                <div class="company-info col-12 col-md-100">
+                    <h3>CONTACT US :</h3>
+                    <p>Address : 1234 lock, Charlotte, North Carolina, United States</p>
+                    <p>Phone : +12 534894364</p>
+                    <p>Email : <a href="mailto:info@example.com">info@example.com</a></p>
+                    <p>Fax : +12 534894364</p>
+                </div>
+
+            </div>
+
+                <div class="col-12 col-md-6 text-center text-md-right">
+                    <h6 class="mb-0 caption color-black">© Copyright 2021 | All Rights Reserved.</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
