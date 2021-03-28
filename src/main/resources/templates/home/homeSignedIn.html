@@ -27,12 +27,37 @@
             <p style="text-align:center;" >
                     <a sec:authorize="hasAnyAuthority('ROLE_INSTRUCTOR')" th:href="@{/activities/instructor/{userId}(userId = ${user.userId})}" class="btn btn-secondary mr-3"><i class="fas fa-chalkboard"> Your Modules</i></a>
                     <a sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href="@{/notifications/{userId}(userId = ${user.userId})}" class="btn btn-secondary mr-3"><i class="far fa-sticky-note"> Notifications</i></a>
-                    <a sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:href="@{/class/class/{userId}(userId = ${user.userId})}" class="btn btn-secondary mr-3"><i class="fas fa-chalkboard"> Your Class</i></a>
+                    <a sec:authorize="hasAnyAuthority('ROLE_STUDENT')" th:if="${user.classes}!=null" th:href="@{/class/class/{userId}(userId = ${user.userId})}" class="btn btn-secondary mr-3"><i class="fas fa-chalkboard"> Your Class</i></a>
                     <a th:href="@{/user/{userId}(userId = ${user.userId})}" class=" btn btn-secondary mr-3"> <i class="fas fa-user" th:text="' '+'Update'"></i></a>
                 </p>
-
         </div>
+    </div>
+    <!-- /hand-crafted -->
+    <section class="hand-crafted bg-light py-5">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="row banner-grids">
+                <div class="col-md-6 banner-image">
+                    <div class="effect-w3">
+                        <img src="images/img.jpg" alt="" class="img-fluid image1">
 
+                    </div>
+
+                </div>
+                <div class="col-md-6 last-img pl-lg-5 p-3">
+                    <h3 class="tittle my-lg-5 my-3"><span class="sub-tittle"> Now You can get </span>The Best Education for Bright Future</h3>
+                    <p class="mb-4"> This course is designed to provide students with a working knowledge of computer concepts and essential skills necessary for work and communication in today's society. Students will learn safety, security, and ethical issues in computing and social networking.</p>
+                    <p class="mb-4">Learning how to code gives you more professional opportunities, increases your attrictiveness on the job market and provides higher salary.
+                        It's a source of great satisfaction and valuable investment in your future.</p>
+
+                    <button sec:authorize="hasAnyAuthority('ROLE_STUDENT')" class="btn-primary" onclick="location.href='/courses/'" type="button">
+                        Apply for a Course</button>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
     </div>
 </body>
 </html>
