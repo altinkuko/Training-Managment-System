@@ -49,7 +49,7 @@
                     <p class="mb-4">Learning how to code gives you more professional opportunities, increases your attrictiveness on the job market and provides higher salary.
                         It's a source of great satisfaction and valuable investment in your future.</p>
 
-                    <button class="btn-primary" onclick="location.href='/courses/'" type="button">
+                    <button sec:authorize="hasAnyAuthority('ROLE_STUDENT')" class="btn-primary" onclick="location.href='/courses/'" type="button">
                         Apply for a Course</button>
 
 
