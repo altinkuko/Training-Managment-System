@@ -54,13 +54,13 @@ public class ActivitiesService {
         this.activitiesRepository.delete(activities);
     }
 
-    public Activities updateActivities(final Long activitiesId, final Long userId, final Long classId) {
-        Activities activities = this.activitiesRepository.findById(activitiesId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
-        activities.setDate(activities.getDate());
-        activities.setSubject(activities.getSubject());
-        activities.setInstructor(this.userRepository.findById(userId).get());
-        activities.setClasses(this.classesRepository.findById(classId).get());
-        return this.activitiesRepository.save(activities);
+    public Activities updateActivities(final ActivitiesRequestParams activities, final Long activitiesId, final Long userId, final Long classId) {
+        Activities existingActivities = this.activitiesRepository.findById(activitiesId).orElseThrow(() -> new NotFoundException(ErrorMessages.ID_NOT_FOUND_EXCEPTION));
+        existingActivities.setDate(activities.getDate());
+        existingActivities.setSubject(activities.getSubject());
+        existingActivities.setInstructor(this.userRepository.findById(userId).get());
+        existingActivities.setClasses(this.classesRepository.findById(classId).get());
+        return this.activitiesRepository.save(existingActivities);
     }
 public List<Activities> listInstructorActivities(final Long userId){
         return this.activitiesRepository.findActivitiesByInstructor(userId);

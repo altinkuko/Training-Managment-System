@@ -41,11 +41,19 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <input type="submit" value="Log in" class="form-control btn btn-primary">
+                    <input type="submit" value="Log in" class="form-control btn btn-light">
                 </div>
             </div>
         </div>
     </form>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input type="button" onclick="location.href='/'" th:href="@{/}" value="Cancel" class="form-control btn btn-secondary">
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-3">
             <p>New user? <a th:href="@{/registration}">Register here</a></p>
