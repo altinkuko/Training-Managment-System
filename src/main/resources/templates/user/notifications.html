@@ -11,6 +11,8 @@
 
 <body style="background-image: url('/images/g5.jpg');" >
 <div th:replace="headerLogin :: headerLogin"></div>
+<div style="background-image: url('/images/g5.jpg');">
+<div class="login p-md-5 p-4 mx-auto bg-white mw-100 col-lg-5 " >
 <div class="row">
     <div class="col-sm-4 mb-5">
         <div th:if="${#lists.isEmpty(notifications)}"><h2>No Notifications!</h2></div>
@@ -42,6 +44,8 @@
             </tbody>
         </table>
     </div>
+</div>
+</div>
 </div>
 </body>
 </html>
