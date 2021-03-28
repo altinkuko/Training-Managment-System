@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 </head>
 
-<body>
+<body >
 <div th:replace="headerLogin :: headerLogin"></div>
+<div style="background-image: url('/images/g3.jpg'); ">
 <div class="row">
     <div class="col-sm-4 mb-5">
         <div th:if="${#lists.isEmpty(students)}"><h2>No Students!</h2></div>
@@ -39,6 +40,7 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
 </body>
 </html>
