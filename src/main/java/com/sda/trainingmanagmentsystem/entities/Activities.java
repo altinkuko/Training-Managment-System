@@ -24,11 +24,14 @@ public class Activities {
     private String subject;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "classId")
     @JsonIgnore
     private Classes classes;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
+    @JsonIgnore
     private User instructor;
 }

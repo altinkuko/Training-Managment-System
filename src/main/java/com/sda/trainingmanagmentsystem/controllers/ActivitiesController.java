@@ -81,12 +81,12 @@ public class ActivitiesController {
     public String updateActivities(@PathVariable("activitiesId") final Long activitiesId,
                                    @RequestParam("classId") Long classId,
                                    @RequestParam("instructorId")Long userId,
-                                   @Valid @ModelAttribute("module") Activities activities,
+                                   @Valid @ModelAttribute("module") ActivitiesRequestParams activities,
                                    Model model, BindingResult result){
         if (result.hasErrors()) return "/admin/editActivities";
         model.addAttribute("users", this.userRepository.findUsersByRole(2L));
         model.addAttribute("classes", this.classesRepository.findAll());
-        this.activitiesService.updateActivities(activitiesId, userId, classId);
+        this.activitiesService.updateActivities(activities,activitiesId, userId, classId);
         return "redirect:/activities/all?success";
     }
 
